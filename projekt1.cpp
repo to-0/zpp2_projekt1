@@ -115,14 +115,12 @@ int najdi_slovo(char** pole, int* index[], char slovo[], int m, int n, int dlzky
 	int* s = index[slovo[0] - 'A'];
 	s++;
 	int nasiel = 0; //ci som nasiel alebo nenasiel slovo aspon raz
-	int nasiel_v_smere=0;//pomocna premenna na vyskrtavanie viac krat
 	int i = 1;
 	int pocet_moznych_vyskytov_pismena = dlzky[slovo[0] - 'A'] / 2; //kolko krat tu to pismeno moze byt, vzdy delim 2 lebo davam 2 suradnice
 	int posuny = 0;
-	while (r != NULL && s != NULL && posuny<pocet_moznych_vyskytov_pismena 
-		&& *r>-1 && *s>-1) {
+	while (r != NULL && s != NULL && posuny<pocet_moznych_vyskytov_pismena
+		&& *r>-1 && *s > -1) {
 		i = 1;
-		nasiel_v_smere = 0;
 		int ki = *r, kj = *s;
 		//smer dole
 		while (ki + 1 < m && i < dlzka && toupper(pole[ki + 1][kj]) == slovo[i]) { //to upper aby nahodou ked uz je to pismenko vyskrtnute aby sme ho mohli pouzit 
@@ -135,11 +133,12 @@ int najdi_slovo(char** pole, int* index[], char slovo[], int m, int n, int dlzky
 			i = 1;
 		}
 		else {
-			if (nasiel_v_smere == 0) { //este som nenasiel slovo v nejakom smere
-				vyskrtni(pole, pom, *r, *s, dlzka);
-				nasiel = 1;
-				nasiel_v_smere = 1;
-			}
+			vyskrtni(pole, pom, *r, *s, dlzka);
+			nasiel = 1;
+			s += 2;
+			r += 2;
+			posuny += 1;
+			continue;
 			//return 1;
 		}
 		//smer doprava
@@ -153,11 +152,12 @@ int najdi_slovo(char** pole, int* index[], char slovo[], int m, int n, int dlzky
 			i = 1;
 		}
 		else {
-			if (nasiel_v_smere == 0) { //este som nenasiel slovo v nejakom smere
-				vyskrtni(pole, pom, *r, *s, dlzka);
-				nasiel = 1;
-				nasiel_v_smere = 1;
-			}
+			vyskrtni(pole, pom, *r, *s, dlzka);
+			nasiel = 1;
+			s += 2;
+			r += 2;
+			posuny += 1;
+			continue;
 			//return 1;
 		}
 		//hore
@@ -171,11 +171,12 @@ int najdi_slovo(char** pole, int* index[], char slovo[], int m, int n, int dlzky
 			i = 1;
 		}
 		else {
-			if (nasiel_v_smere == 0) { //este som nenasiel slovo v nejakom smere
-				vyskrtni(pole, pom, *r, *s, dlzka);
-				nasiel = 1;
-				nasiel_v_smere = 1;
-			}
+			vyskrtni(pole, pom, *r, *s, dlzka);
+			nasiel = 1;
+			s += 2;
+			r += 2;
+			posuny += 1;
+			continue;
 			//return 1;
 		}
 		//dolava
@@ -189,11 +190,12 @@ int najdi_slovo(char** pole, int* index[], char slovo[], int m, int n, int dlzky
 			i = 1;
 		}
 		else {
-			if (nasiel_v_smere == 0) { //este som nenasiel slovo v nejakom smere
-				vyskrtni(pole, pom, *r, *s, dlzka);
-				nasiel = 1;
-				nasiel_v_smere = 1;
-			}
+			vyskrtni(pole, pom, *r, *s, dlzka);
+			nasiel = 1;
+			s += 2;
+			r += 2;
+			posuny += 1;
+			continue;
 			//return 1;
 		}
 		// doprava dole
@@ -208,11 +210,12 @@ int najdi_slovo(char** pole, int* index[], char slovo[], int m, int n, int dlzky
 			i = 1;
 		}
 		else {
-			if (nasiel_v_smere == 0) { //este som nenasiel slovo v nejakom smere
-				vyskrtni(pole, pom, *r, *s, dlzka);
-				nasiel = 1;
-				nasiel_v_smere = 1;
-			}
+			vyskrtni(pole, pom, *r, *s, dlzka);
+			nasiel = 1;
+			s += 2;
+			r += 2;
+			posuny += 1;
+			continue;
 			//return 1;
 		}
 		//dole dolava
@@ -227,11 +230,12 @@ int najdi_slovo(char** pole, int* index[], char slovo[], int m, int n, int dlzky
 			i = 1;
 		}
 		else {
-			if (nasiel_v_smere == 0) { //este som nenasiel slovo v nejakom smere
-				vyskrtni(pole, pom, *r, *s, dlzka);
-				nasiel = 1;
-				nasiel_v_smere = 1;
-			}
+			vyskrtni(pole, pom, *r, *s, dlzka);
+			nasiel = 1;
+			s += 2;
+			r += 2;
+			posuny += 1;
+			continue;
 			//return 1;
 		}
 		//hore doprava
@@ -246,11 +250,14 @@ int najdi_slovo(char** pole, int* index[], char slovo[], int m, int n, int dlzky
 			i = 1;
 		}
 		else {
-			if (nasiel_v_smere == 0) { //este som nenasiel slovo v nejakom smere
-				vyskrtni(pole, pom, *r, *s, dlzka);
-				nasiel = 1;
-				nasiel_v_smere = 1;
-			}
+			//este som nenasiel slovo v nejakom smere
+			vyskrtni(pole, pom, *r, *s, dlzka);
+			nasiel = 1;
+			s += 2;
+			r += 2;
+			posuny += 1;
+			continue;
+
 			//return 1;
 		}
 		//hore dolava
@@ -265,16 +272,18 @@ int najdi_slovo(char** pole, int* index[], char slovo[], int m, int n, int dlzky
 			i = 1;
 		}
 		else {
-			if (nasiel_v_smere == 0) { //este som nenasiel slovo v nejakom smere
-				vyskrtni(pole, pom, *r, *s, dlzka);
-				nasiel = 1;
-				nasiel_v_smere = 1;
-			}
+			vyskrtni(pole, pom, *r, *s, dlzka);
+			nasiel = 1;
+			s += 2;
+			r += 2;
+			posuny += 1;
+			continue;
 			//return 1;
 		}
 		s += 2;
 		r += 2;
 		posuny += 1;
+
 	}
 	return nasiel;
 }
@@ -318,8 +327,6 @@ int main()
 	}
 	vytvor_index(index, dlzky);
 	nacitaj(pole, m, n, f, index, dlzky);
-	//vypis(pole, m, n);
-	//vypis_index(index,dlzky);
 	while (fscanf(f, "%s", slovo) == 1) {
 		if (!najdi_slovo(pole, index, slovo, m, n, dlzky)) printf("Nenaslo sa slovo %s\n", slovo);
 		vypis(pole, m, n);
